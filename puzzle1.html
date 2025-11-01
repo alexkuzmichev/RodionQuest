@@ -21,6 +21,11 @@
     .kbd--correct { background:#22c55e; color:#fff; }
     .kbd--present { background:#eab308; color:#fff; }
     .kbd--absent  { background:#64748b; color:#fff; }
+    .kbd--action { background:#3b82f6; color:#fff; font-weight:700; }
+    .kbd--action:hover { background:#2563eb; }
+    .kbd--action.entered { background:#059669; }
+    .kbd--action.delete { background:#ef4444; }
+    .kbd--action.delete:hover { background:#dc2626; }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-yellow-100 to-green-200 flex items-center justify-center p-4 text-slate-900">
@@ -33,7 +38,7 @@
       <div id="board" class="grid grid-rows-6 gap-2 mb-4 justify-items-center"></div>
 
       <!-- Клавиатура: каждая строка — flex с равным распределением -->
-      <div id="keyboard" class="select-none space-y-2"></div>
+      <div id="keyboard" class="select-none space-y-2 -mx-4 sm:-mx-5 px-4 sm:px-5"></div>
 
       <!-- Кнопка перехода дальше (активируется при победе) -->
       <div class="mt-4 flex justify-center">
@@ -53,7 +58,7 @@
 <script>
 // ====== Настройки ======
 const ROWS = 6, COLS = 5;
-const SECRET = 'САПОГ'; // загаданное слово (кириллица, 5 букв)
+const SECRET = 'ФЕРМА'; // загаданное слово (кириллица, 5 букв)
 
 // ====== DOM ======
 const board = document.getElementById('board');
@@ -100,8 +105,13 @@ function createKeyboard(){
       b.textContent = k;
       b.dataset.key = k;
       b.className = 'kbd text-sm';
-      if (k === 'Ввод') b.style.flex = '1.3 1 0%';     // Enter немного шире
-      if (k === '⌫')    b.style.flex = '1.1 1 0%';     // Backspace слегка шире
+      if (k === 'Ввод') {
+        b.style.flex = '1.3 1 0%';     // Enter немного шире
+        b.classList.add('kbd--action');
+      } else if (k === '⌫') {
+        b.style.flex = '1.1 1 0%';     // Backspace слегка шире
+        b.classList.add('kbd--action', 'delete');
+      }
       b.addEventListener('click', ()=>handleKey(k));
       line.appendChild(b);
     });
@@ -111,6 +121,8 @@ function createKeyboard(){
 function colorKeyboard(letter, status){
   const btn = keyboard.querySelector(`[data-key="${letter}"]`);
   if (!btn) return;
+  // Не изменяем цвет для кнопок действий (Ввод и ⌫)
+  if (btn.classList.contains('kbd--action')) return;
   const pr = {'':0,'absent':1,'present':2,'correct':3};
   const cur = btn.dataset.status || '';
   if (pr[status] <= pr[cur]) return;
