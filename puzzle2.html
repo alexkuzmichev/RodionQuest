@@ -2,17 +2,211 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Загадка 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сапоги найдены! — Калязинский вестник</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'PT Serif', serif;
+      background: #f5f0e8;
+    }
+    
+    .newspaper-header {
+      font-family: 'Playfair Display', serif;
+      border-bottom: 4px double #000;
+    }
+    
+    .article-headline {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+    
+    .article-body {
+      font-family: 'PT Serif', serif;
+      line-height: 1.8;
+    }
+    
+    .article-divider {
+      border-top: 1px solid #ddd;
+      margin: 1rem 0;
+    }
+    
+    @media (min-width: 768px) {
+      .article-divider {
+        margin: 1.5rem 0;
+      }
+    }
+    
+    .quote {
+      border-left: 3px solid #1e40af;
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: #374151;
+    }
+    
+    .newspaper-date {
+      font-variant-numeric: oldstyle-nums;
+    }
+    
+    .article-image {
+      width: 100%;
+      max-width: 600px;
+      margin: 1.5rem auto;
+      border: 2px solid #333;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #1e40af;
+      color: white;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      text-align: center;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: rgba(30, 64, 175, 0.2);
+    }
+    
+    .action-button:hover {
+      background: #1e3a8a;
+    }
+    
+    .action-button:active {
+      background: #1e3a8a;
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-100 to-blue-200">
-  <div class="text-center p-6 bg-white rounded-2xl shadow-xl max-w-md">
-    <h2 class="text-2xl font-semibold mb-4">🧩 Загадка №2</h2>
-    <p class="mb-6">Сто одежек и все без застёжек. Что это?</p>
-    <button onclick="location.href='puzzle3.html'" 
-            class="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition">
-      Далее →
-    </button>
+<body class="min-h-screen bg-amber-50 py-2 sm:py-4 md:py-8">
+  <div class="max-w-4xl mx-auto px-2 sm:px-3 md:px-4 bg-white shadow-2xl border-2 border-gray-800">
+    <!-- Шапка газеты -->
+    <header class="newspaper-header text-center py-3 sm:py-4 md:py-6 px-2 sm:px-3 md:px-4">
+      <div class="mb-1 sm:mb-2">
+        <a href="index.html" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-black hover:text-gray-700 transition">
+          КАЛЯЗИНСКИЙ ВЕСТНИК
+        </a>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-0 text-xs sm:text-sm uppercase tracking-wider mt-2 sm:mt-0">
+        <span class="text-xs sm:text-sm">Основана в 1923 году</span>
+        <span class="newspaper-date text-base sm:text-lg font-bold">№ 1248</span>
+        <span class="text-xs sm:text-sm">Суббота, 1 ноября</span>
+      </div>
+      <div class="mt-1 sm:mt-2 text-[10px] sm:text-xs text-gray-600 leading-tight">
+        Независимая общественно-политическая газета Калязинского района
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
+      <article>
+        <!-- Заголовок -->
+        <h1 class="article-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
+          Сапоги найдены! Загадочное послание обнаружено на поле за фермой
+        </h1>
+        
+        <!-- Метаинформация -->
+        <div class="mb-4 sm:mb-6 text-xs sm:text-sm text-gray-600 uppercase tracking-wide">
+          Никольское, 1 ноября • Эксклюзив • Репортаж
+        </div>
+        
+        <div class="article-divider"></div>
+        
+        <!-- Основной текст статьи -->
+        <div class="article-body text-sm sm:text-base text-gray-900 space-y-4 sm:space-y-6">
+          <p>
+            Сегодня утром жители деревни Никольское обнаружили все пропавшие сапоги на поле за местной фермой. Однако находка превзошла все ожидания: из 187 пар резиновых сапогов была выложена огромная надпись "С днём рождения!".
+          </p>
+          
+          <div class="article-image">
+            <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="background: #f0f8f0;">
+              <!-- Трава/поле -->
+              <rect width="800" height="400" fill="#90EE90" opacity="0.3"/>
+              <g opacity="0.4">
+                <ellipse cx="100" cy="350" rx="60" ry="30" fill="#228B22"/>
+                <ellipse cx="250" cy="360" rx="50" ry="25" fill="#228B22"/>
+                <ellipse cx="400" cy="355" rx="55" ry="28" fill="#228B22"/>
+                <ellipse cx="550" cy="365" rx="48" ry="24" fill="#228B22"/>
+                <ellipse cx="700" cy="358" rx="52" ry="26" fill="#228B22"/>
+              </g>
+              
+              <!-- Ферма на заднем плане -->
+              <rect x="50" y="150" width="120" height="100" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+              <polygon points="50,150 110,100 170,150" fill="#A0522D" stroke="#654321" stroke-width="2"/>
+              <rect x="70" y="170" width="25" height="35" fill="#4169E1"/>
+              <rect x="110" y="180" width="30" height="30" fill="#4169E1"/>
+              
+              <!-- Надпись из сапог "С днём рождения!" -->
+              <g transform="translate(150, 200)">
+                <!-- Буквы выложены из сапог (упрощенное представление) -->
+                <text x="0" y="0" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#FF4500" stroke="#8B0000" stroke-width="2">
+                  С ДНЁМ
+                </text>
+                <text x="0" y="100" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#FF4500" stroke="#8B0000" stroke-width="2">
+                  РОЖДЕНИЯ!
+                </text>
+                
+                <!-- Декоративные сапоги вокруг надписи -->
+                <ellipse cx="-20" cy="10" rx="15" ry="25" fill="#1E90FF" opacity="0.7"/>
+                <ellipse cx="420" cy="15" rx="15" ry="25" fill="#1E90FF" opacity="0.7"/>
+                <ellipse cx="-15" cy="110" rx="15" ry="25" fill="#1E90FF" opacity="0.7"/>
+                <ellipse cx="435" cy="115" rx="15" ry="25" fill="#1E90FF" opacity="0.7"/>
+                <ellipse cx="200" cy="-10" rx="18" ry="28" fill="#FF6347" opacity="0.7"/>
+                <ellipse cx="210" cy="140" rx="18" ry="28" fill="#FF6347" opacity="0.7"/>
+              </g>
+              
+              <!-- Подпись к фото -->
+              <text x="400" y="390" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">
+                Фото: Сапоги выложены на поле за фермой в виде поздравления
+              </text>
+            </svg>
+          </div>
+          
+          <p>
+            Рано утром местный фермер Пётр Иванов отправился проверить поля и обнаружил необычное зрелище. На ровной площадке за фермой все пропавшие сапоги были аккуратно разложены, образуя праздничное поздравление.
+          </p>
+          
+          <div class="quote">
+            «Не могу поверить! — восклицает Пётр. — Я думал, что сапоги украли для перепродажи или какого-то злого умысла. А оказалось, это было тайное поздравление с днём рождения! Кто-то очень старался, чтобы сделать такой подарок».
+          </div>
+          
+          <p>
+            Полиция прекратила расследование и переквалифицировала дело из уголовного в "доброе дело с необычным исполнением". Следователь Алексей Морозов прокомментировал:
+          </p>
+          
+          <div class="quote">
+            «Это был самый необычный случай в моей практике. Мы искали преступников, а нашли романтиков. Хотя бы один человек точно должен был бы заметить, кто выкладывал сапоги, но никто ничего не видел. Загадочно, но красиво».
+          </p>
+          
+          <p>
+            Жители деревни уже начали забирать свои сапоги, но обещают сохранить надпись как можно дольше — на память о необычном происшествии. А именинник или именинница, если они читают эту газету, знайте: весь посёлок поздравляет вас с днём рождения!
+          </p>
+        </div>
+        
+        <!-- Кнопка перехода -->
+        <div class="mt-6 sm:mt-8 text-center">
+          <a href="puzzle3.html" class="action-button">
+            Далее →
+          </a>
+        </div>
+        
+        <!-- Навигация -->
+        <div class="mt-6 sm:mt-8 pt-4 border-t border-gray-300">
+          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+            ← Вернуться к главной странице
+          </a>
+        </div>
+      </article>
+    </main>
+
+    <!-- Подвал газеты -->
+    <footer class="border-t-2 border-gray-800 px-2 sm:px-4 md:px-6 py-2 sm:py-3 text-[10px] sm:text-xs text-center text-gray-600 leading-tight mt-4 sm:mt-6">
+      <p>Тираж: 1 248 экземпляров • Цена: 15 рублей • Редакция не несет ответственности за мнение читателей</p>
+    </footer>
   </div>
 </body>
 </html>
