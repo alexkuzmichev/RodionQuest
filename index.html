@@ -2,16 +2,159 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>С Днём Рождения!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калязинский вестник</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'PT Serif', serif;
+      background: #f5f0e8;
+    }
+    
+    .newspaper-header {
+      font-family: 'Playfair Display', serif;
+      border-bottom: 4px double #000;
+    }
+    
+    .article-headline {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+    
+    .article-teaser {
+      font-family: 'PT Serif', serif;
+      line-height: 1.6;
+    }
+    
+    .newspaper-column {
+      column-gap: 2rem;
+    }
+    
+    .article-divider {
+      border-top: 1px solid #ddd;
+      margin: 1.5rem 0;
+    }
+    
+    .article-link {
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .article-link:hover {
+      color: #1e40af;
+      text-decoration: underline;
+    }
+    
+    .newspaper-date {
+      font-variant-numeric: oldstyle-nums;
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-200 to-blue-200">
-  <div class="text-center p-6 bg-white rounded-2xl shadow-xl">
-    <h1 class="text-3xl font-bold mb-4">🎉 С Днём Рождения! 🎂</h1>
-    <p class="mb-6">Готов начать весёлый квест?</p>
-    <a href="puzzle1.html" class="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition">
-      Начать
-    </a>
+<body class="min-h-screen bg-amber-50 py-8">
+  <div class="max-w-5xl mx-auto px-4 bg-white shadow-2xl border-2 border-gray-800">
+    <!-- Шапка газеты -->
+    <header class="newspaper-header text-center py-6 px-4">
+      <div class="mb-2">
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight">КАЛЯЗИНСКИЙ ВЕСТНИК</h1>
+      </div>
+      <div class="flex justify-between items-center text-sm uppercase tracking-wider">
+        <span>Основана в 1923 году</span>
+        <span class="newspaper-date text-lg font-bold">№ 1247</span>
+        <span>Пятница</span>
+      </div>
+      <div class="mt-2 text-xs text-gray-600">
+        Независимая общественно-политическая газета Калязинского района
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="px-6 py-4">
+      <div class="newspaper-column grid md:grid-cols-3 gap-6">
+        <!-- Главная колонка -->
+        <div class="md:col-span-2">
+          <!-- Главная новость -->
+          <article class="mb-6">
+            <h2 class="article-headline text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              Странное происшествие в деревне Никольское
+            </h2>
+            <div class="mb-4 text-sm text-gray-600 uppercase tracking-wide">
+              Эксклюзив • Деревня Никольское • Репортаж
+            </div>
+            <div class="article-divider"></div>
+            <p class="article-teaser text-lg leading-relaxed mb-4 text-gray-800">
+              <a href="puzzle1.html" class="article-link text-gray-900 font-semibold">
+                В Никольском пропала обувь: село в шоке, следствие ищет резиновых воров...
+              </a>
+            </p>
+            <p class="article-teaser text-base leading-relaxed text-gray-700">
+              На этой неделе жители небольшой деревни Никольское столкнулись с необъяснимым происшествием, 
+              которое уже несколько дней не дает покоя местным жителям и привлекло внимание районных властей. 
+              По предварительным данным, из нескольких дворов одновременно исчезла обувь...
+            </p>
+          </article>
+
+          <div class="article-divider"></div>
+
+          <!-- Дополнительные статьи для реалистичности -->
+          <article class="mb-4">
+            <h3 class="article-headline text-xl font-bold mb-2">В районе начался сезон сбора урожая</h3>
+            <p class="article-teaser text-sm text-gray-700">
+              Аграрии Калязинского района приступили к уборочной кампании. По предварительным оценкам, 
+              урожай зерновых в этом году ожидается на уровне прошлогоднего...
+            </p>
+          </article>
+
+          <div class="article-divider"></div>
+
+          <article class="mb-4">
+            <h3 class="article-headline text-xl font-bold mb-2">Ремонт дороги на Московском шоссе</h3>
+            <p class="article-teaser text-sm text-gray-700">
+              В ближайшее время начнется капитальный ремонт участка дороги между Калязином и Угличем. 
+              Ожидается, что работы продлятся до конца сентября...
+            </p>
+          </article>
+        </div>
+
+        <!-- Боковая колонка -->
+        <aside class="md:col-span-1 border-l-2 border-gray-300 pl-4">
+          <div class="mb-4">
+            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Погода</h3>
+            <div class="text-sm text-gray-700">
+              <p class="mb-1"><strong>Сегодня:</strong> +18°C, переменная облачность</p>
+              <p><strong>Завтра:</strong> +16°C, возможен дождь</p>
+            </div>
+          </div>
+
+          <div class="article-divider"></div>
+
+          <div class="mb-4">
+            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Объявления</h3>
+            <div class="text-xs text-gray-700 space-y-2">
+              <p><strong>Продам:</strong> Дрова березовые, колотые. Звонить после 18:00.</p>
+              <p><strong>Куплю:</strong> Старые советские часы в рабочем состоянии.</p>
+              <p><strong>Услуги:</strong> Ремонт обуви, каблуки, подошвы. Мастерская на ул. Ленина.</p>
+            </div>
+          </div>
+
+          <div class="article-divider"></div>
+
+          <div>
+            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Афиша</h3>
+            <div class="text-xs text-gray-700">
+              <p class="mb-1"><strong>Кинотеатр "Родина":</strong> Сегодня в 19:00 - "Ирония судьбы"</p>
+              <p><strong>ДК им. Горького:</strong> Завтра в 18:00 - Концерт местных артистов</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Подвал газеты -->
+    <footer class="border-t-2 border-gray-800 px-6 py-3 text-xs text-center text-gray-600">
+      <p>Тираж: 1 247 экземпляров • Цена: 15 рублей • Редакция не несет ответственности за мнение читателей</p>
+    </footer>
   </div>
 </body>
 </html>
