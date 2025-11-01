@@ -2,17 +2,209 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Загадка 1</title>
+  <title>Загадка 1 — Вордле (рус.)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-yellow-100 to-green-200">
-  <div class="text-center p-6 bg-white rounded-2xl shadow-xl max-w-md">
-    <h2 class="text-2xl font-semibold mb-4">🧩 Загадка №1</h2>
-    <p class="mb-6">Без рук, без ног, а в окно стучится. Кто это?</p>
-    <button onclick="location.href='puzzle2.html'" 
-            class="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition">
-      Проверить / Далее →
-    </button>
+<body class="min-h-screen bg-gradient-to-br from-yellow-100 to-green-200 flex items-center justify-center p-4 text-slate-900">
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl p-5">
+      <h1 class="text-2xl font-bold text-center mb-1">🟩 Вордле (русский)</h1>
+      <p class="text-center text-sm text-slate-600 mb-4">Угадайте слово из 5 букв за 6 попыток</p>
+
+      <!-- Игровое поле -->
+      <div id="board" class="grid grid-rows-6 gap-2 mb-4"></div>
+
+      <!-- Клавиатура -->
+      <div id="keyboard" class="select-none"></div>
+
+      <!-- Кнопка перехода дальше (разблокируется при победе) -->
+      <div class="mt-4 flex justify-center">
+        <a id="nextBtn" href="puzzle2.html"
+           class="px-4 py-2 rounded-xl bg-slate-300 text-white font-semibold pointer-events-none opacity-50">
+          Далее →
+        </a>
+      </div>
+
+      <!-- Тестовая навигация (по просьбе, чтобы можно было проверить переходы) -->
+      <div class="mt-2 text-center text-xs text-slate-500">
+        <a href="puzzle2.html" class="underline">Тест: пропустить игру и перейти к следующей странице</a>
+      </div>
+    </div>
   </div>
+
+<script>
+// ====== Настройки ======
+const ROWS = 6;
+const COLS = 5;
+// Загаданное слово (кириллица, 5 букв)
+const SECRET = 'САПОГ';
+
+// ====== DOM ======
+const board = document.getElementById('board');
+const keyboard = document.getElementById('keyboard');
+const nextBtn = document.getElementById('nextBtn');
+
+// ====== Утилиты ======
+function makeTile() {
+  const d = document.createElement('div');
+  d.className = 'w-14 h-14 border border-slate-300 rounded-xl flex items-center justify-center text-2xl font-bold bg-white';
+  d.textContent = '';
+  return d;
+}
+
+function createBoard() {
+  for (let r = 0; r < ROWS; r++) {
+    const row = document.createElement('div');
+    row.className = 'grid grid-cols-5 gap-2';
+    for (let c = 0; c < COLS; c++) row.appendChild(makeTile());
+    board.appendChild(row);
+  }
+}
+function rowTiles(r){ return board.children[r].children; }
+function setTile(r,c,ch){ rowTiles(r)[c].textContent = ch || ''; }
+function colorTile(el, status){
+  if (status === 'correct') el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-green-500';
+  else if (status === 'present') el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-yellow-500';
+  else el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-slate-400';
+}
+
+// ====== Клавиатура (русская) ======
+const KEYS = [
+  'ЙЦУКЕНГШЩЗХЪ'.split(''),
+  'ФЫВАПРОЛДЖЭ'.split(''),
+  ['Ввод', ...'ЯЧСМИТЬБЮ'.split(''), '⌫']
+];
+function createKeyboard(){
+  KEYS.forEach(row=>{
+    const line = document.createElement('div');
+    line.className = 'flex justify-center gap-1 mb-1';
+    row.forEach(k=>{
+      const b = document.createElement('button');
+      b.textContent = k;
+      b.dataset.key = k;
+      b.className = 'px-3 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-sm font-semibold';
+      if (k === 'Ввод') b.className += ' basis-20';
+      if (k === '⌫') b.className += ' basis-16';
+      b.addEventListener('click', ()=>handleKey(k));
+      line.appendChild(b);
+    });
+    keyboard.appendChild(line);
+  });
+}
+function colorKeyboard(letter, status){
+  const btn = keyboard.querySelector(`[data-key="${letter}"]`);
+  if (!btn) return;
+  const pr = {'':0,'absent':1,'present':2,'correct':3};
+  const cur = btn.dataset.status || '';
+  if (pr[status] <= pr[cur]) return;
+  btn.dataset.status = status;
+  if (status === 'correct') btn.className = 'px-3 py-2 rounded-lg bg-green-500 text-white text-sm font-semibold';
+  else if (status === 'present') btn.className = 'px-3 py-2 rounded-lg bg-yellow-500 text-white text-sm font-semibold';
+  else if (status === 'absent') btn.className = 'px-3 py-2 rounded-lg bg-slate-500 text-white text-sm font-semibold';
+}
+
+// ====== Состояние ======
+let currentRow = 0;
+let currentCol = 0;
+let locked = false;
+
+createBoard();
+createKeyboard();
+
+// ====== Ввод ======
+function handleKey(k){
+  if (locked) return;
+  if (/^[А-ЯЁ]$/.test(k)) {
+    if (currentCol < COLS) { setTile(currentRow, currentCol, k); currentCol++; }
+  } else if (k === '⌫' || k === 'Backspace') {
+    if (currentCol > 0) { currentCol--; setTile(currentRow, currentCol, ''); }
+  } else if (k === 'Ввод' || k === 'Enter') {
+    if (currentCol !== COLS) return shakeRow(currentRow);
+    submitRow();
+  }
+}
+
+window.addEventListener('keydown', e=>{
+  let key = e.key;
+  // Приводим к верхнему регистру и кириллице, если это одна буква
+  if (key.length === 1) {
+    key = key.toUpperCase();
+    if (/^[А-ЯЁ]$/.test(key)) { handleKey(key); return; }
+  }
+  if (key === 'Enter') handleKey('Ввод');
+  else if (key === 'Backspace') handleKey('Backspace');
+});
+
+function getGuess(r){
+  return Array.from(rowTiles(r)).map(t=>t.textContent || '').join('');
+}
+
+function evaluate(guess, secret){
+  const res = Array(COLS).fill('absent');
+  const s = secret.split('');
+  const g = guess.split('');
+
+  // точные совпадения
+  for (let i=0;i<COLS;i++){
+    if (g[i] === s[i]) { res[i]='correct'; s[i]=null; g[i]=null; }
+  }
+  // присутствующие
+  for (let i=0;i<COLS;i++){
+    if (g[i]) {
+      const idx = s.indexOf(g[i]);
+      if (idx !== -1){ res[i]='present'; s[idx]=null; }
+    }
+  }
+  return res;
+}
+
+function submitRow(){
+  const guess = getGuess(currentRow);
+  const statuses = evaluate(guess, SECRET);
+
+  // раскрасить
+  const tiles = rowTiles(currentRow);
+  for (let i=0;i<COLS;i++){
+    const st = statuses[i];
+    colorTile(tiles[i], st);
+    const letter = guess[i];
+    colorKeyboard(letter, st === 'correct' ? 'correct' : st === 'present' ? 'present' : 'absent');
+  }
+
+  if (guess === SECRET){
+    locked = true;
+    toast(`Верно! Слово ${SECRET} 🎉`);
+    // Разблокируем кнопку "Далее"
+    nextBtn.className = 'px-4 py-2 rounded-xl bg-green-600 text-white font-semibold';
+    nextBtn.classList.remove('pointer-events-none','opacity-50');
+    return;
+  }
+
+  currentRow++; currentCol = 0;
+  if (currentRow >= ROWS){
+    locked = true;
+    toast(`Не вышло. Было слово: ${SECRET} 😅`);
+  }
+}
+
+// ====== UI ======
+function shakeRow(r){
+  const row = board.children[r];
+  row.classList.add('animate-[shake_0.3s_ease-in-out]');
+  setTimeout(()=>row.classList.remove('animate-[shake_0.3s_ease-in-out]'),300);
+}
+function toast(msg){
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.className = 'fixed left-1/2 -translate-x-1/2 top-5 bg-slate-900 text-white px-4 py-2 rounded-xl shadow-lg z-50';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
+}
+</script>
+
+<style>
+@keyframes shake { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-4px)} 40%,60%{transform:translateX(4px)} }
+</style>
 </body>
 </html>
