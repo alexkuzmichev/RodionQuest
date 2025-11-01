@@ -19,9 +19,13 @@
     </div>
   </div>
   <script>
-    setTimeout(() => {
-      confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
-    }, 1000);
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+        }
+      }, 1000);
+    });
   </script>
 </body>
 </html>
