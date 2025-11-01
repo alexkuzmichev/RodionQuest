@@ -5,20 +5,37 @@
   <title>Загадка 1 — Вордле (рус.)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --tile: clamp(44px, 9.5vw, 62px); }
+    @keyframes shake { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-4px)} 40%,60%{transform:translateX(4px)} }
+    .tile {
+      width: var(--tile); height: var(--tile);
+      border-radius: 0.75rem; display:flex; align-items:center; justify-content:center;
+      font-weight: 800; font-size: clamp(18px, 5vw, 28px); background:#fff; border:1px solid rgb(203 213 225);
+    }
+    .tile--correct { background:#22c55e; color:#fff; border:none; }
+    .tile--present { background:#eab308; color:#fff; border:none; }
+    .tile--absent  { background:#64748b; color:#fff; border:none; }
+    .kbd { flex:1 1 0%; min-width:0; padding:.6rem .5rem; border-radius:.6rem; background:#e2e8f0; font-weight:600; }
+    .kbd:hover { background:#cbd5e1; }
+    .kbd--correct { background:#22c55e; color:#fff; }
+    .kbd--present { background:#eab308; color:#fff; }
+    .kbd--absent  { background:#64748b; color:#fff; }
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-yellow-100 to-green-200 flex items-center justify-center p-4 text-slate-900">
   <div class="w-full max-w-md">
-    <div class="bg-white rounded-2xl shadow-xl p-5">
+    <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-5">
       <h1 class="text-2xl font-bold text-center mb-1">🟩 Вордле (русский)</h1>
       <p class="text-center text-sm text-slate-600 mb-4">Угадайте слово из 5 букв за 6 попыток</p>
 
       <!-- Игровое поле -->
-      <div id="board" class="grid grid-rows-6 gap-2 mb-4"></div>
+      <div id="board" class="grid grid-rows-6 gap-2 mb-4 justify-items-center"></div>
 
-      <!-- Клавиатура -->
-      <div id="keyboard" class="select-none"></div>
+      <!-- Клавиатура: каждая строка — flex с равным распределением -->
+      <div id="keyboard" class="select-none space-y-2"></div>
 
-      <!-- Кнопка перехода дальше (разблокируется при победе) -->
+      <!-- Кнопка перехода дальше (активируется при победе) -->
       <div class="mt-4 flex justify-center">
         <a id="nextBtn" href="puzzle2.html"
            class="px-4 py-2 rounded-xl bg-slate-300 text-white font-semibold pointer-events-none opacity-50">
@@ -26,7 +43,7 @@
         </a>
       </div>
 
-      <!-- Тестовая навигация (по просьбе, чтобы можно было проверить переходы) -->
+      <!-- Тестовая навигация -->
       <div class="mt-2 text-center text-xs text-slate-500">
         <a href="puzzle2.html" class="underline">Тест: пропустить игру и перейти к следующей странице</a>
       </div>
@@ -35,24 +52,21 @@
 
 <script>
 // ====== Настройки ======
-const ROWS = 6;
-const COLS = 5;
-// Загаданное слово (кириллица, 5 букв)
-const SECRET = 'САПОГ';
+const ROWS = 6, COLS = 5;
+const SECRET = 'САПОГ'; // загаданное слово (кириллица, 5 букв)
 
 // ====== DOM ======
 const board = document.getElementById('board');
 const keyboard = document.getElementById('keyboard');
 const nextBtn = document.getElementById('nextBtn');
 
-// ====== Утилиты ======
+// ====== Поле ======
 function makeTile() {
   const d = document.createElement('div');
-  d.className = 'w-14 h-14 border border-slate-300 rounded-xl flex items-center justify-center text-2xl font-bold bg-white';
+  d.className = 'tile';
   d.textContent = '';
   return d;
 }
-
 function createBoard() {
   for (let r = 0; r < ROWS; r++) {
     const row = document.createElement('div');
@@ -64,28 +78,30 @@ function createBoard() {
 function rowTiles(r){ return board.children[r].children; }
 function setTile(r,c,ch){ rowTiles(r)[c].textContent = ch || ''; }
 function colorTile(el, status){
-  if (status === 'correct') el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-green-500';
-  else if (status === 'present') el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-yellow-500';
-  else el.className = 'w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold text-white bg-slate-400';
+  el.classList.remove('tile--correct','tile--present','tile--absent');
+  if (status === 'correct') el.classList.add('tile--correct');
+  else if (status === 'present') el.classList.add('tile--present');
+  else el.classList.add('tile--absent');
 }
 
 // ====== Клавиатура (русская) ======
 const KEYS = [
-  'ЙЦУКЕНГШЩЗХЪ'.split(''),
-  'ФЫВАПРОЛДЖЭ'.split(''),
-  ['Ввод', ...'ЯЧСМИТЬБЮ'.split(''), '⌫']
+  'ЙЦУКЕНГШЩЗХЪ'.split(''),     // 12
+  'ФЫВАПРОЛДЖЭ'.split(''),      // 11
+  ['Ввод', ...'ЯЧСМИТЬБЮ'.split(''), '⌫'] // 1 + 9 + 1 = 11
 ];
+
 function createKeyboard(){
   KEYS.forEach(row=>{
     const line = document.createElement('div');
-    line.className = 'flex justify-center gap-1 mb-1';
+    line.className = 'flex gap-1';
     row.forEach(k=>{
       const b = document.createElement('button');
       b.textContent = k;
       b.dataset.key = k;
-      b.className = 'px-3 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-sm font-semibold';
-      if (k === 'Ввод') b.className += ' basis-20';
-      if (k === '⌫') b.className += ' basis-16';
+      b.className = 'kbd text-sm';
+      if (k === 'Ввод') b.style.flex = '1.3 1 0%';     // Enter немного шире
+      if (k === '⌫')    b.style.flex = '1.1 1 0%';     // Backspace слегка шире
       b.addEventListener('click', ()=>handleKey(k));
       line.appendChild(b);
     });
@@ -99,15 +115,14 @@ function colorKeyboard(letter, status){
   const cur = btn.dataset.status || '';
   if (pr[status] <= pr[cur]) return;
   btn.dataset.status = status;
-  if (status === 'correct') btn.className = 'px-3 py-2 rounded-lg bg-green-500 text-white text-sm font-semibold';
-  else if (status === 'present') btn.className = 'px-3 py-2 rounded-lg bg-yellow-500 text-white text-sm font-semibold';
-  else if (status === 'absent') btn.className = 'px-3 py-2 rounded-lg bg-slate-500 text-white text-sm font-semibold';
+  btn.classList.remove('kbd--correct','kbd--present','kbd--absent');
+  if (status === 'correct') btn.classList.add('kbd--correct');
+  else if (status === 'present') btn.classList.add('kbd--present');
+  else if (status === 'absent')  btn.classList.add('kbd--absent');
 }
 
 // ====== Состояние ======
-let currentRow = 0;
-let currentCol = 0;
-let locked = false;
+let currentRow = 0, currentCol = 0, locked = false;
 
 createBoard();
 createKeyboard();
@@ -127,7 +142,6 @@ function handleKey(k){
 
 window.addEventListener('keydown', e=>{
   let key = e.key;
-  // Приводим к верхнему регистру и кириллице, если это одна буква
   if (key.length === 1) {
     key = key.toUpperCase();
     if (/^[А-ЯЁ]$/.test(key)) { handleKey(key); return; }
@@ -144,12 +158,9 @@ function evaluate(guess, secret){
   const res = Array(COLS).fill('absent');
   const s = secret.split('');
   const g = guess.split('');
-
-  // точные совпадения
   for (let i=0;i<COLS;i++){
     if (g[i] === s[i]) { res[i]='correct'; s[i]=null; g[i]=null; }
   }
-  // присутствующие
   for (let i=0;i<COLS;i++){
     if (g[i]) {
       const idx = s.indexOf(g[i]);
@@ -163,7 +174,6 @@ function submitRow(){
   const guess = getGuess(currentRow);
   const statuses = evaluate(guess, SECRET);
 
-  // раскрасить
   const tiles = rowTiles(currentRow);
   for (let i=0;i<COLS;i++){
     const st = statuses[i];
@@ -175,7 +185,6 @@ function submitRow(){
   if (guess === SECRET){
     locked = true;
     toast(`Верно! Слово ${SECRET} 🎉`);
-    // Разблокируем кнопку "Далее"
     nextBtn.className = 'px-4 py-2 rounded-xl bg-green-600 text-white font-semibold';
     nextBtn.classList.remove('pointer-events-none','opacity-50');
     return;
@@ -202,9 +211,5 @@ function toast(msg){
   setTimeout(()=>t.remove(), 2500);
 }
 </script>
-
-<style>
-@keyframes shake { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-4px)} 40%,60%{transform:translateX(4px)} }
-</style>
 </body>
 </html>
