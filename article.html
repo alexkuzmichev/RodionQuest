@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>В Никольском пропали все сапоги — Калязинский вестник</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'PT Serif', serif;
+      background: #f5f0e8;
+    }
+    
+    .newspaper-header {
+      font-family: 'Playfair Display', serif;
+      border-bottom: 4px double #000;
+    }
+    
+    .article-headline {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+    
+    .article-body {
+      font-family: 'PT Serif', serif;
+      line-height: 1.8;
+    }
+    
+    .article-divider {
+      border-top: 1px solid #ddd;
+      margin: 1rem 0;
+    }
+    
+    @media (min-width: 768px) {
+      .article-divider {
+        margin: 1.5rem 0;
+      }
+    }
+    
+    .quote {
+      border-left: 3px solid #1e40af;
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: #374151;
+    }
+    
+    .newspaper-date {
+      font-variant-numeric: oldstyle-nums;
+    }
+    
+    .action-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #1e40af;
+      color: white;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      text-align: center;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: rgba(30, 64, 175, 0.2);
+    }
+    
+    .action-button:hover {
+      background: #1e3a8a;
+    }
+    
+    .action-button:active {
+      background: #1e3a8a;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-amber-50 py-2 sm:py-4 md:py-8">
+  <div class="max-w-4xl mx-auto px-2 sm:px-3 md:px-4 bg-white shadow-2xl border-2 border-gray-800">
+    <!-- Шапка газеты -->
+    <header class="newspaper-header text-center py-3 sm:py-4 md:py-6 px-2 sm:px-3 md:px-4">
+      <div class="mb-1 sm:mb-2">
+        <a href="index.html" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-black hover:text-gray-700 transition">
+          КАЛЯЗИНСКИЙ ВЕСТНИК
+        </a>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-0 text-xs sm:text-sm uppercase tracking-wider mt-2 sm:mt-0">
+        <span class="text-xs sm:text-sm">Основана в 1923 году</span>
+        <span class="newspaper-date text-base sm:text-lg font-bold">№ 1247</span>
+        <span class="text-xs sm:text-sm">Пятница, 31 октября</span>
+      </div>
+      <div class="mt-1 sm:mt-2 text-[10px] sm:text-xs text-gray-600 leading-tight">
+        Независимая общественно-политическая газета Калязинского района
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
+      <article>
+        <!-- Заголовок -->
+        <h1 class="article-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
+          В Никольском пропали все сапоги: село в шоке, следствие ищет резиновых воров
+        </h1>
+        
+        <!-- Метаинформация -->
+        <div class="mb-4 sm:mb-6 text-xs sm:text-sm text-gray-600 uppercase tracking-wide">
+          Никольское, 31 октября • Эксклюзив • Репортаж
+        </div>
+        
+        <div class="article-divider"></div>
+        
+        <!-- Основной текст статьи -->
+        <div class="article-body text-sm sm:text-base text-gray-900 space-y-4 sm:space-y-6">
+          <p>
+            Жители деревни Никольское утром обнаружили, что с их дворов исчезли все резиновые сапоги — от старых советских «кирзачей» до ярких детских «крокодилов». По предварительным подсчётам, пропало не менее 187 пар.
+          </p>
+          
+          <div class="quote">
+            «Я вышел утром на крыльцо — а сапогов нет! — возмущается местный безработный. — Вчера ещё стояли у крыльца, а сегодня только следы от них на грязи остались. Как теперь по лужам ходить? В валенках скользко, а в тапках — холодно!»
+          </div>
+          
+          <p>
+            По словам местных, кража произошла ночью. Собаки не лаяли, ворота не взламывали. Единственная зацепка — странные следы босых ног размером 42–43, уходящие в сторону леса.
+          </p>
+          
+          <p>
+            Глава сельского поселения уже обратился в районное отделение полиции.
+          </p>
+          
+          <div class="quote">
+            «Это не просто хулиганство, это чрезвычайное происшествие! — Без сапогов люди не смогут ни в огород, ни на ферму. У нас тут не Москва, асфальта нет».
+          </div>
+          
+          <p>
+            Следователь Алексей Морозов подтвердил:
+          </p>
+          
+          <div class="quote">
+            «Работает версия организованной группы. Возможно, сапоги украдены для перепродажи на чёрном рынке или для какого-то ритуала. Проверяем все версии, включая инопланетян — в прошлом году у нас НЛО над полем кружил».
+          </p>
+          
+          <p>
+            Пока полиция ищет улики, жители Никольского объявили народный сбор: кто принесёт запасные сапоги — получит банку солёных огурцов.
+          </p>
+        </div>
+        
+        <!-- Кнопка перехода -->
+        <div class="mt-6 sm:mt-8 text-center">
+          <a href="puzzle1.html" class="action-button">
+            Куда пропали сапоги?
+          </a>
+        </div>
+        
+        <!-- Навигация -->
+        <div class="mt-6 sm:mt-8 pt-4 border-t border-gray-300">
+          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+            ← Вернуться к главной странице
+          </a>
+        </div>
+      </article>
+    </main>
+
+    <!-- Подвал газеты -->
+    <footer class="border-t-2 border-gray-800 px-2 sm:px-4 md:px-6 py-2 sm:py-3 text-[10px] sm:text-xs text-center text-gray-600 leading-tight mt-4 sm:mt-6">
+      <p>Тираж: 1 247 экземпляров • Цена: 15 рублей • Редакция не несет ответственности за мнение читателей</p>
+    </footer>
+  </div>
+</body>
+</html>
+
