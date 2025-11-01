@@ -28,18 +28,23 @@
       line-height: 1.6;
     }
     
-    .newspaper-column {
-      column-gap: 2rem;
-    }
-    
     .article-divider {
       border-top: 1px solid #ddd;
-      margin: 1.5rem 0;
+      margin: 1rem 0;
+    }
+    
+    @media (min-width: 768px) {
+      .article-divider {
+        margin: 1.5rem 0;
+      }
     }
     
     .article-link {
       cursor: pointer;
       transition: color 0.2s;
+      display: block;
+      padding: 0.5rem 0;
+      -webkit-tap-highlight-color: rgba(30, 64, 175, 0.2);
     }
     
     .article-link:hover {
@@ -47,48 +52,52 @@
       text-decoration: underline;
     }
     
+    .article-link:active {
+      color: #1e40af;
+    }
+    
     .newspaper-date {
       font-variant-numeric: oldstyle-nums;
     }
   </style>
 </head>
-<body class="min-h-screen bg-amber-50 py-8">
-  <div class="max-w-5xl mx-auto px-4 bg-white shadow-2xl border-2 border-gray-800">
+<body class="min-h-screen bg-amber-50 py-2 sm:py-4 md:py-8">
+  <div class="max-w-5xl mx-auto px-2 sm:px-3 md:px-4 bg-white shadow-2xl border-2 border-gray-800">
     <!-- Шапка газеты -->
-    <header class="newspaper-header text-center py-6 px-4">
-      <div class="mb-2">
-        <h1 class="text-5xl md:text-6xl font-black tracking-tight">КАЛЯЗИНСКИЙ ВЕСТНИК</h1>
+    <header class="newspaper-header text-center py-3 sm:py-4 md:py-6 px-2 sm:px-3 md:px-4">
+      <div class="mb-1 sm:mb-2">
+        <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight">КАЛЯЗИНСКИЙ ВЕСТНИК</h1>
       </div>
-      <div class="flex justify-between items-center text-sm uppercase tracking-wider">
-        <span>Основана в 1923 году</span>
-        <span class="newspaper-date text-lg font-bold">№ 1247</span>
-        <span>Пятница</span>
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-0 text-xs sm:text-sm uppercase tracking-wider mt-2 sm:mt-0">
+        <span class="text-xs sm:text-sm">Основана в 1923 году</span>
+        <span class="newspaper-date text-base sm:text-lg font-bold">№ 1247</span>
+        <span class="text-xs sm:text-sm">Пятница</span>
       </div>
-      <div class="mt-2 text-xs text-gray-600">
+      <div class="mt-1 sm:mt-2 text-[10px] sm:text-xs text-gray-600 leading-tight">
         Независимая общественно-политическая газета Калязинского района
       </div>
     </header>
 
     <!-- Основной контент -->
-    <main class="px-6 py-4">
-      <div class="newspaper-column grid md:grid-cols-3 gap-6">
+    <main class="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
+      <div class="grid md:grid-cols-3 md:gap-6">
         <!-- Главная колонка -->
         <div class="md:col-span-2">
           <!-- Главная новость -->
-          <article class="mb-6">
-            <h2 class="article-headline text-4xl md:text-5xl font-bold mb-4 leading-tight">
+          <article class="mb-4 sm:mb-6">
+            <h2 class="article-headline text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
               Странное происшествие в деревне Никольское
             </h2>
-            <div class="mb-4 text-sm text-gray-600 uppercase tracking-wide">
+            <div class="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm text-gray-600 uppercase tracking-wide">
               Эксклюзив • Деревня Никольское • Репортаж
             </div>
             <div class="article-divider"></div>
-            <p class="article-teaser text-lg leading-relaxed mb-4 text-gray-800">
+            <p class="article-teaser text-base sm:text-lg leading-relaxed mb-3 sm:mb-4 text-gray-800">
               <a href="puzzle1.html" class="article-link text-gray-900 font-semibold">
                 В Никольском пропала обувь: село в шоке, следствие ищет резиновых воров...
               </a>
             </p>
-            <p class="article-teaser text-base leading-relaxed text-gray-700">
+            <p class="article-teaser text-sm sm:text-base leading-relaxed text-gray-700">
               На этой неделе жители небольшой деревни Никольское столкнулись с необъяснимым происшествием, 
               которое уже несколько дней не дает покоя местным жителям и привлекло внимание районных властей. 
               По предварительным данным, из нескольких дворов одновременно исчезла обувь...
@@ -98,9 +107,9 @@
           <div class="article-divider"></div>
 
           <!-- Дополнительные статьи для реалистичности -->
-          <article class="mb-4">
-            <h3 class="article-headline text-xl font-bold mb-2">В районе начался сезон сбора урожая</h3>
-            <p class="article-teaser text-sm text-gray-700">
+          <article class="mb-3 sm:mb-4">
+            <h3 class="article-headline text-lg sm:text-xl font-bold mb-1 sm:mb-2">В районе начался сезон сбора урожая</h3>
+            <p class="article-teaser text-xs sm:text-sm text-gray-700">
               Аграрии Калязинского района приступили к уборочной кампании. По предварительным оценкам, 
               урожай зерновых в этом году ожидается на уровне прошлогоднего...
             </p>
@@ -108,20 +117,20 @@
 
           <div class="article-divider"></div>
 
-          <article class="mb-4">
-            <h3 class="article-headline text-xl font-bold mb-2">Ремонт дороги на Московском шоссе</h3>
-            <p class="article-teaser text-sm text-gray-700">
+          <article class="mb-3 sm:mb-4">
+            <h3 class="article-headline text-lg sm:text-xl font-bold mb-1 sm:mb-2">Ремонт дороги на Московском шоссе</h3>
+            <p class="article-teaser text-xs sm:text-sm text-gray-700">
               В ближайшее время начнется капитальный ремонт участка дороги между Калязином и Угличем. 
               Ожидается, что работы продлятся до конца сентября...
             </p>
           </article>
         </div>
 
-        <!-- Боковая колонка -->
-        <aside class="md:col-span-1 border-l-2 border-gray-300 pl-4">
-          <div class="mb-4">
-            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Погода</h3>
-            <div class="text-sm text-gray-700">
+        <!-- Боковая колонка - на мобильных показывается после основного контента -->
+        <aside class="mt-4 sm:mt-6 md:mt-0 md:border-l-2 md:border-gray-300 md:pl-4">
+          <div class="mb-3 sm:mb-4">
+            <h3 class="article-headline text-base sm:text-lg font-bold mb-1 sm:mb-2 uppercase tracking-wide">Погода</h3>
+            <div class="text-xs sm:text-sm text-gray-700">
               <p class="mb-1"><strong>Сегодня:</strong> +18°C, переменная облачность</p>
               <p><strong>Завтра:</strong> +16°C, возможен дождь</p>
             </div>
@@ -129,9 +138,9 @@
 
           <div class="article-divider"></div>
 
-          <div class="mb-4">
-            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Объявления</h3>
-            <div class="text-xs text-gray-700 space-y-2">
+          <div class="mb-3 sm:mb-4">
+            <h3 class="article-headline text-base sm:text-lg font-bold mb-1 sm:mb-2 uppercase tracking-wide">Объявления</h3>
+            <div class="text-xs text-gray-700 space-y-1 sm:space-y-2">
               <p><strong>Продам:</strong> Дрова березовые, колотые. Звонить после 18:00.</p>
               <p><strong>Куплю:</strong> Старые советские часы в рабочем состоянии.</p>
               <p><strong>Услуги:</strong> Ремонт обуви, каблуки, подошвы. Мастерская на ул. Ленина.</p>
@@ -141,7 +150,7 @@
           <div class="article-divider"></div>
 
           <div>
-            <h3 class="article-headline text-lg font-bold mb-2 uppercase tracking-wide">Афиша</h3>
+            <h3 class="article-headline text-base sm:text-lg font-bold mb-1 sm:mb-2 uppercase tracking-wide">Афиша</h3>
             <div class="text-xs text-gray-700">
               <p class="mb-1"><strong>Кинотеатр "Родина":</strong> Сегодня в 19:00 - "Ирония судьбы"</p>
               <p><strong>ДК им. Горького:</strong> Завтра в 18:00 - Концерт местных артистов</p>
@@ -152,7 +161,7 @@
     </main>
 
     <!-- Подвал газеты -->
-    <footer class="border-t-2 border-gray-800 px-6 py-3 text-xs text-center text-gray-600">
+    <footer class="border-t-2 border-gray-800 px-2 sm:px-4 md:px-6 py-2 sm:py-3 text-[10px] sm:text-xs text-center text-gray-600 leading-tight">
       <p>Тираж: 1 247 экземпляров • Цена: 15 рублей • Редакция не несет ответственности за мнение читателей</p>
     </footer>
   </div>
