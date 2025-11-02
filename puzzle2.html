@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Сапоги найдены! — Калязинский вестник</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap');
     
@@ -71,6 +72,10 @@
       text-align: center;
       transition: background 0.2s;
       -webkit-tap-highlight-color: rgba(30, 64, 175, 0.2);
+      border: none;
+      cursor: pointer;
+      font-size: inherit;
+      font-family: inherit;
     }
     
     .action-button:hover {
@@ -150,9 +155,9 @@
         
         <!-- Кнопка перехода -->
         <div class="mt-6 sm:mt-8 text-center">
-          <a href="puzzle3.html" class="action-button">
-            Далее →
-          </a>
+          <button id="celebrateBtn" class="action-button">
+            Ура!
+          </button>
         </div>
         
         <!-- Навигация -->
@@ -169,5 +174,35 @@
       <p>Тираж: 1 248 экземпляров • Цена: 15 рублей • Редакция не несет ответственности за мнение читателей</p>
     </footer>
   </div>
+  
+  <script>
+    document.getElementById('celebrateBtn').addEventListener('click', function() {
+      // Запускаем эффектный салют конфетти
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      
+      // Еще несколько салютов для более яркого эффекта
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+      }, 250);
+      
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+      }, 400);
+    });
+  </script>
 </body>
 </html>
