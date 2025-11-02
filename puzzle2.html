@@ -4,10 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Сапоги найдены! — Калязинский вестник</title>
+  <!-- Preconnect для ускорения загрузки внешних ресурсов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <!-- Google Fonts через link вместо @import -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=PT+Serif:wght@400;700&display=swap');
     
     body {
       font-family: 'PT Serif', serif;
@@ -128,7 +134,7 @@
           </p>
           
           <div class="article-image">
-            <img src="boots.png" alt="Сапоги выложены на поле за фермой в виде поздравления 'С днём рождения!'" class="w-full h-auto" />
+            <img src="boots.png" alt="Сапоги выложены на поле за фермой в виде поздравления 'С днём рождения!'" class="w-full h-auto" loading="lazy" />
             
           </div>
           
@@ -176,32 +182,44 @@
   </div>
   
   <script>
-    document.getElementById('celebrateBtn').addEventListener('click', function() {
-      // Запускаем эффектный салют конфетти
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
+    // Ожидаем загрузки всех ресурсов, включая defer скрипты
+    window.addEventListener('load', function() {
+      const btn = document.getElementById('celebrateBtn');
+      if (!btn) return;
+      
+      btn.addEventListener('click', function() {
+        // Проверяем, что confetti загрузился
+        if (typeof confetti === 'undefined') {
+          console.warn('Confetti не загружен');
+          return;
+        }
+        
+        // Запускаем эффектный салют конфетти
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+        
+        // Еще несколько салютов для более яркого эффекта
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+          });
+        }, 250);
+        
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+          });
+        }, 400);
       });
-      
-      // Еще несколько салютов для более яркого эффекта
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 }
-        });
-      }, 250);
-      
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 }
-        });
-      }, 400);
     });
   </script>
 </body>
